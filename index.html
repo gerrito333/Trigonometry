@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trigo-Trainer für Luis 🚀 | Mathe 10 Realschule Bayern</title>
+<style>
+:root{
+  --bg:#0b1020; --bg2:#121a33; --card:rgba(255,255,255,.06); --border:rgba(255,255,255,.12);
+  --text:#e8ecff; --muted:#9aa6d1; --sin:#ff5c8a; --cos:#4fb3ff; --tan:#3ee08f; --acc:#ffc94d; --vio:#a78bfa;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--text);
+  background:radial-gradient(1200px 600px at 10% -10%,#2a1b5c 0%,transparent 60%),radial-gradient(1000px 600px at 110% 10%,#0e3a5c 0%,transparent 60%),var(--bg);
+  line-height:1.6}
+a{color:var(--cos)}
+nav{position:sticky;top:0;z-index:50;background:rgba(11,16,32,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+nav .inner{max-width:1150px;margin:auto;display:flex;gap:.3rem;overflow-x:auto;padding:.5rem 1rem;scrollbar-width:none}
+nav a{white-space:nowrap;text-decoration:none;color:var(--muted);padding:.35rem .75rem;border-radius:999px;font-size:.9rem;transition:.2s}
+nav a:hover,nav a.active{background:var(--card);color:var(--text)}
+main{max-width:1150px;margin:auto;padding:0 1rem 4rem}
+header.hero{padding:4rem 1rem 2rem;text-align:center;max-width:1150px;margin:auto}
+.hero h1{font-size:clamp(2.2rem,6vw,4rem);margin:.2em 0;line-height:1.1;
+  background:linear-gradient(90deg,var(--sin),var(--acc),var(--tan),var(--cos));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);font-size:1.15rem;max-width:700px;margin:auto}
+.badge{display:inline-block;background:var(--card);border:1px solid var(--border);padding:.3rem .8rem;border-radius:999px;font-size:.85rem;color:var(--acc)}
+section{margin-top:3.5rem;scroll-margin-top:70px}
+section>h2{font-size:1.9rem;margin:.2em 0 .6em;display:flex;align-items:center;gap:.6rem}
+section>h2 .num{font-size:1rem;background:linear-gradient(135deg,var(--vio),var(--cos));color:#fff;border-radius:10px;padding:.15rem .55rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.3rem 1.4rem;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.grid{display:grid;gap:1rem}
+.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.f{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.15rem;background:rgba(0,0,0,.3);padding:.6rem .9rem;border-radius:10px;margin:.5rem 0;border-left:4px solid var(--acc);overflow-x:auto}
+.f.big{font-size:1.4rem;text-align:center}
+.merk{border:1px solid rgba(255,201,77,.4);background:rgba(255,201,77,.08);border-radius:14px;padding:1rem 1.2rem;margin:1rem 0}
+.merk::before{content:"💡 Merke";display:block;font-weight:700;color:var(--acc);margin-bottom:.3rem}
+.warn{border:1px solid rgba(255,92,138,.45);background:rgba(255,92,138,.08);border-radius:14px;padding:1rem 1.2rem;margin:1rem 0}
+.warn::before{content:"⚠️ Typischer Fehler";display:block;font-weight:700;color:var(--sin);margin-bottom:.3rem}
+.sin{color:var(--sin)} .cos{color:var(--cos)} .tan{color:var(--tan)} .acc{color:var(--acc)} .muted{color:var(--muted)}
+canvas{width:100%;display:block;border-radius:14px;background:rgba(0,0,0,.25);touch-action:none}
+input[type=range]{width:100%;accent-color:var(--vio)}
+input[type=number],input[type=text],select{background:rgba(0,0,0,.35);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:.5rem .7rem;font-size:1rem;width:100%}
+label{font-size:.9rem;color:var(--muted)}
+button{background:linear-gradient(135deg,var(--vio),var(--cos));color:#fff;border:0;border-radius:12px;padding:.65rem 1.2rem;font-size:1rem;font-weight:600;cursor:pointer;transition:transform .1s,filter .2s}
+button:hover{filter:brightness(1.15)} button:active{transform:scale(.97)}
+button.ghost{background:var(--card);border:1px solid var(--border)}
+.vals{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-top:.8rem}
+.val{background:rgba(0,0,0,.3);border-radius:12px;padding:.6rem;text-align:center}
+.val b{display:block;font-size:1.35rem;font-variant-numeric:tabular-nums}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{border:1px solid var(--border);padding:.45rem .6rem;text-align:center}
+th{background:rgba(255,255,255,.05)}
+.row{display:flex;gap:.8rem;flex-wrap:wrap;align-items:end}
+.row>div{flex:1;min-width:120px}
+.out{margin-top:1rem;background:rgba(0,0,0,.3);border-radius:12px;padding:1rem;min-height:2rem}
+.out .step{margin:.3rem 0;font-family:"Cambria Math",Georgia,serif}
+.check{display:flex;gap:.6rem;align-items:flex-start;padding:.45rem .3rem;border-radius:8px;cursor:pointer}
+.check:hover{background:rgba(255,255,255,.04)}
+.check input{width:20px;height:20px;accent-color:var(--tan);margin-top:.2rem;flex-shrink:0}
+.progress{height:12px;background:rgba(0,0,0,.4);border-radius:999px;overflow:hidden;margin:.5rem 0 1rem}
+.progress div{height:100%;width:0;background:linear-gradient(90deg,var(--sin),var(--acc),var(--tan));transition:width .4s}
+details{background:rgba(0,0,0,.25);border-radius:12px;padding:.6rem 1rem;margin:.6rem 0}
+details summary{cursor:pointer;font-weight:600;color:var(--acc)}
+.quizq{font-size:1.15rem;margin:.6rem 0 1rem}
+.stats{display:flex;gap:1rem;flex-wrap:wrap}
+.stat{background:rgba(0,0,0,.3);border-radius:12px;padding:.5rem 1rem;text-align:center;min-width:90px}
+.stat b{display:block;font-size:1.5rem}
+.ok{color:var(--tan);font-weight:700} .no{color:var(--sin);font-weight:700}
+.quad{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;font-size:.9rem;margin-top:.5rem}
+.quad div{background:rgba(0,0,0,.3);border-radius:10px;padding:.4rem;text-align:center}
+.quad div.on{outline:2px solid var(--acc)}
+footer{text-align:center;color:var(--muted);padding:2rem;font-size:.9rem}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:100}
+.pill{display:inline-block;padding:.1rem .55rem;border-radius:999px;background:rgba(255,255,255,.08);font-size:.85rem;margin:.1rem}
+@media print{nav,#confetti,.noprint{display:none!important} body{background:#fff;color:#000} .card{box-shadow:none;border-color:#ccc}}
+</style>
+</head>
+<body>
+<canvas id="confetti"></canvas>
+<nav><div class="inner">
+  <a href="#start">🏁 Start</a>
+  <a href="#einheitskreis">⭕ Einheitskreis</a>
+  <a href="#zusammenhaenge">🔗 Zusammenhänge</a>
+  <a href="#steigung">📈 Steigung</a>
+  <a href="#sinusfunktion">〰️ Sinusfunktion</a>
+  <a href="#supplement">🔄 Supplement</a>
+  <a href="#winkel">🎯 Winkel bestimmen</a>
+  <a href="#saetze">📐 Sinus- & Kosinussatz</a>
+  <a href="#rechner">🧮 Dreiecksrechner</a>
+  <a href="#extrem">🏔️ Extremwerte</a>
+  <a href="#quiz">🎮 Quiz</a>
+  <a href="#spick">📝 Spickzettel</a>
+</div></nav>
+
+<header class="hero" id="start">
+  <span class="badge">Mathe 10 · Realschule Bayern · Kapitel 1</span>
+  <h1>Trigonometrie-Trainer<br>für Luis</h1>
+  <p>Alles, was du für die Schulaufgabe brauchst – mit interaktiven Grafiken, Rechnern, Beispielaufgaben und einem Quiz, das nie ausgeht. Los geht's! 💪</p>
+</header>
+
+<main>
+<!-- CHECKLIST -->
+<section>
+  <div class="card">
+    <h3 style="margin-top:0">✅ Deine Lern-Checkliste <span class="muted" style="font-weight:400;font-size:.9rem">(wird im Browser gespeichert)</span></h3>
+    <div class="progress"><div id="progbar"></div></div>
+    <div id="progtxt" class="muted" style="margin-bottom:.5rem"></div>
+    <div id="checklist" class="grid g2" style="gap:.1rem 1rem"></div>
+  </div>
+</section>
+
+<!-- 1 EINHEITSKREIS -->
+<section id="einheitskreis">
+  <h2><span class="num">1</span>Sinus, Kosinus & Tangens am Einheitskreis</h2>
+  <div class="grid g2">
+    <div class="card">
+      <canvas id="ucircle" height="420"></canvas>
+      <p class="muted" style="font-size:.9rem;text-align:center">👆 Zieh den gelben Punkt P über den Kreis!</p>
+      <input type="range" id="uAngle" min="0" max="360" step="1" value="40">
+    </div>
+    <div class="card">
+      <div style="font-size:1.4rem">α = <b class="acc" id="uA">40°</b></div>
+      <div class="vals">
+        <div class="val"><span class="sin">sin α</span><b class="sin" id="uS"></b></div>
+        <div class="val"><span class="cos">cos α</span><b class="cos" id="uC"></b></div>
+        <div class="val"><span class="tan">tan α</span><b class="tan" id="uT"></b></div>
+      </div>
+      <p>Der <b>Einheitskreis</b> hat den Radius <b>r = 1</b> und den Mittelpunkt im Ursprung. Für den Punkt P auf dem Kreis gilt:</p>
+      <div class="f">P( <span class="cos">cos α</span> | <span class="sin">sin α</span> )</div>
+      <ul>
+        <li><span class="cos">cos α</span> = x-Koordinate von P (waagrecht)</li>
+        <li><span class="sin">sin α</span> = y-Koordinate von P (senkrecht)</li>
+        <li><span class="tan">tan α</span> = Abschnitt auf der Tangente x = 1 &nbsp;→&nbsp; tan α = sin α / cos α</li>
+      </ul>
+      <b>Vorzeichen in den Quadranten:</b>
+      <div class="quad" id="quads">
+        <div data-q="2">II (90°–180°)<br><span class="sin">sin +</span> <span class="cos">cos −</span> <span class="tan">tan −</span></div>
+        <div data-q="1">I (0°–90°)<br><span class="sin">sin +</span> <span class="cos">cos +</span> <span class="tan">tan +</span></div>
+        <div data-q="3">III (180°–270°)<br><span class="sin">sin −</span> <span class="cos">cos −</span> <span class="tan">tan +</span></div>
+        <div data-q="4">IV (270°–360°)<br><span class="sin">sin −</span> <span class="cos">cos +</span> <span class="tan">tan −</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="grid g2" style="margin-top:1rem">
+    <div class="card">
+      <h3 style="margin-top:0">📏 Wertebereiche</h3>
+      <div class="f"><span class="sin">−1 ≤ sin α ≤ 1</span></div>
+      <div class="f"><span class="cos">−1 ≤ cos α ≤ 1</span></div>
+      <div class="f"><span class="tan">tan α ∈ ℝ</span> &nbsp;(alle Zahlen!)</div>
+      <p>Weil P auf dem Kreis mit Radius 1 liegt, können x- und y-Koordinate nie größer als 1 oder kleiner als −1 werden. Der Tangens kann <i>jede</i> Zahl annehmen – bei <b>α = 90°</b> und <b>α = 270°</b> ist er aber <b>nicht definiert</b> (cos α = 0, man würde durch 0 teilen!).</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">⭐ Besondere Werte (gut zu wissen)</h3>
+      <table>
+        <tr><th>α</th><th>0°</th><th>30°</th><th>45°</th><th>60°</th><th>90°</th></tr>
+        <tr><td class="sin">sin α</td><td>0</td><td>½</td><td>½√2</td><td>½√3</td><td>1</td></tr>
+        <tr><td class="cos">cos α</td><td>1</td><td>½√3</td><td>½√2</td><td>½</td><td>0</td></tr>
+        <tr><td class="tan">tan α</td><td>0</td><td>⅓√3</td><td>1</td><td>√3</td><td>n. d.</td></tr>
+      </table>
+      <p class="muted" style="font-size:.9rem">Trick: sin-Zeile = ½√0, ½√1, ½√2, ½√3, ½√4 – die cos-Zeile ist genau rückwärts!</p>
+    </div>
+  </div>
+</section>
+
+<!-- 2 ZUSAMMENHÄNGE -->
+<section id="zusammenhaenge">
+  <h2><span class="num">2</span>Zusammenhänge zwischen sin, cos und tan</h2>
+  <div class="grid g3">
+    <div class="card"><h3 style="margin-top:0">🧩 Trigonometrischer Pythagoras</h3>
+      <div class="f big">(sin α)² + (cos α)² = 1</div>
+      <p>Kommt vom Satz des Pythagoras im Einheitskreis-Dreieck (Hypotenuse = 1).</p></div>
+    <div class="card"><h3 style="margin-top:0">➗ Tangens als Quotient</h3>
+      <div class="f big">tan α = <span class="sin">sin α</span> / <span class="cos">cos α</span></div>
+      <p>gilt für cos α ≠ 0, also α ≠ 90° und α ≠ 270°.</p></div>
+    <div class="card"><h3 style="margin-top:0">🔀 Komplementwinkel</h3>
+      <div class="f">sin(90° − α) = cos α</div>
+      <div class="f">cos(90° − α) = sin α</div>
+      <p>Im rechtwinkligen Dreieck ist „Gegenkathete von α“ = „Ankathete von β“.</p></div>
+  </div>
+  <details><summary>🧠 Beispielaufgabe: cos α und tan α berechnen, wenn sin α = 0,6 und α ∈ ]90°; 180°[</summary>
+    <div class="out">
+      <div class="step">(cos α)² = 1 − (sin α)² = 1 − 0,36 = 0,64</div>
+      <div class="step">cos α = ±0,8 → im II. Quadranten ist cos negativ ⇒ <b>cos α = −0,8</b></div>
+      <div class="step">tan α = sin α / cos α = 0,6 / (−0,8) = <b>−0,75</b></div>
+    </div>
+  </details>
+  <div class="card" style="margin-top:1rem">
+    <h3 style="margin-top:0">🔺 Wiederholung 9. Klasse: rechtwinkliges Dreieck</h3>
+    <div class="grid g3">
+      <div class="f"><span class="sin">sin α</span> = Gegenkathete / Hypotenuse</div>
+      <div class="f"><span class="cos">cos α</span> = Ankathete / Hypotenuse</div>
+      <div class="f"><span class="tan">tan α</span> = Gegenkathete / Ankathete</div>
+    </div>
+    <p class="muted">Eselsbrücke: <b>GAGA HHAG</b> → <b>G</b>egen/<b>H</b>ypo, <b>A</b>n/<b>H</b>ypo, <b>G</b>egen/<b>A</b>n … (sin, cos, tan)</p>
+  </div>
+</section>
+
+<!-- 3 STEIGUNG -->
+<section id="steigung">
+  <h2><span class="num">3</span>Neigungswinkel, Steigung & Schnittwinkel</h2>
+  <div class="grid g2">
+    <div class="card">
+      <canvas id="slopeC" height="360"></canvas>
+      <label>Steigung m = <b id="mVal" class="acc"></b></label>
+      <input type="range" id="mSlider" min="-4" max="4" step="0.1" value="0.8">
+    </div>
+    <div class="card">
+      <p>Der <b>Neigungswinkel α</b> einer Geraden ist der Winkel zwischen der <b>positiven x-Achse</b> und der Geraden (gegen den Uhrzeigersinn gemessen), mit 0° ≤ α &lt; 180°.</p>
+      <div class="f big">m = tan α</div>
+      <div class="vals" style="grid-template-columns:1fr 1fr">
+        <div class="val">Steigung m<b id="mOut" class="acc"></b></div>
+        <div class="val">Neigungswinkel α<b id="aOut" class="tan"></b></div>
+      </div>
+      <div class="warn">Ist m negativ, liefert der Taschenrechner bei tan⁻¹ einen <b>negativen</b> Winkel. Dann musst du <b>+180°</b> rechnen!<br>Beispiel: m = −2 → tan⁻¹(−2) ≈ −63,43° → α = −63,43° + 180° = <b>116,57°</b></div>
+    </div>
+  </div>
+  <div class="grid g2" style="margin-top:1rem">
+    <div class="card">
+      <h3 style="margin-top:0">✂️ Schnittwinkel zweier Geraden</h3>
+      <p>Berechne beide Neigungswinkel und bilde die Differenz:</p>
+      <div class="f">ε = α₂ − α₁ &nbsp;&nbsp;(α₂ der größere Winkel)</div>
+      <p>Ist ε &gt; 90°, gibt man meist den spitzen Winkel <b>180° − ε</b> an. Die Geraden sind senkrecht, wenn m₁ · m₂ = −1.</p>
+      <div class="row">
+        <div><label>m₁ (Gerade g)</label><input type="number" id="sm1" value="0.5" step="0.1"></div>
+        <div><label>m₂ (Gerade h)</label><input type="number" id="sm2" value="-3" step="0.1"></div>
+      </div>
+      <div class="out" id="schnittOut"></div>
+    </div>
+    <div class="card">
+      <canvas id="schnittC" height="340"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- 4 SINUSFUNKTION -->
+<section id="sinusfunktion">
+  <h2><span class="num">4</span>Die Sinusfunktion</h2>
+  <div class="card">
+    <canvas id="sinC" height="340"></canvas>
+    <div class="row" style="margin-top:1rem">
+      <div><label>Streckfaktor a = <b id="saV" class="acc"></b></label><input type="range" id="sa" min="-3" max="3" step="0.5" value="1"></div>
+      <div><label>Faktor b = <b id="sbV" class="acc"></b></label><input type="range" id="sb" min="0.5" max="4" step="0.5" value="1"></div>
+      <div style="flex:0 0 auto"><label><input type="checkbox" id="showCos"> cos-Graph zeigen</label><br><label><input type="checkbox" id="showUnit" checked> y = sin x als Vergleich</label></div>
+    </div>
+    <div class="f big" id="sinFormula"></div>
+  </div>
+  <div class="grid g2" style="margin-top:1rem">
+    <div class="card">
+      <h3 style="margin-top:0">📋 Eigenschaften (aktueller Graph)</h3>
+      <div id="sinProps"></div>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">📋 Eigenschaften von y = sin x</h3>
+      <ul>
+        <li><b>Definitionsmenge:</b> 𝔻 = ℝ</li>
+        <li><b>Wertemenge:</b> 𝕎 = [−1; 1]</li>
+        <li><b>Periode:</b> 360° – der Graph wiederholt sich alle 360°</li>
+        <li><b>Nullstellen:</b> x = k · 180° (… −180°, 0°, 180°, 360° …)</li>
+        <li><b>Hochpunkte:</b> (90° + k·360° | 1)</li>
+        <li><b>Tiefpunkte:</b> (270° + k·360° | −1)</li>
+        <li>Punktsymmetrisch zum Ursprung: sin(−x) = −sin x</li>
+      </ul>
+      <p class="muted">Mit <b>a</b> wird der Graph in y-Richtung gestreckt (Amplitude |a|), mit <b>b</b> wird die Periode zu 360° : b.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5 SUPPLEMENT -->
+<section id="supplement">
+  <h2><span class="num">5</span>Supplementbeziehungen & weitere Beziehungen</h2>
+  <div class="grid g2">
+    <div class="card">
+      <p><b>Supplementwinkel</b> ergänzen sich zu <b>180°</b> (α und 180° − α). Am Einheitskreis sind die Punkte an der y-Achse gespiegelt:</p>
+      <div class="f"><span class="sin">sin(180° − α) = sin α</span></div>
+      <div class="f"><span class="cos">cos(180° − α) = −cos α</span></div>
+      <div class="f"><span class="tan">tan(180° − α) = −tan α</span></div>
+      <div class="merk">Ein stumpfer und ein spitzer Winkel können den <b>gleichen Sinuswert</b> haben! Deshalb ist beim Sinussatz manchmal Vorsicht geboten (zwei Lösungen möglich).</div>
+      <details><summary>Weitere Beziehungen (Spiegelungen am Einheitskreis)</summary>
+        <div class="f">sin(180° + α) = −sin α &nbsp; cos(180° + α) = −cos α &nbsp; tan(180° + α) = tan α</div>
+        <div class="f">sin(360° − α) = −sin α &nbsp; cos(360° − α) = cos α &nbsp; tan(360° − α) = −tan α</div>
+        <div class="f">sin(−α) = −sin α &nbsp; cos(−α) = cos α</div>
+      </details>
+    </div>
+    <div class="card">
+      <canvas id="suppC" height="360"></canvas>
+      <label>α = <b id="supV" class="acc"></b></label>
+      <input type="range" id="supS" min="0" max="180" step="1" value="35">
+      <div class="vals" style="grid-template-columns:1fr 1fr">
+        <div class="val">sin α = <b class="sin" id="sup1"></b></div>
+        <div class="val">sin(180° − α) = <b class="sin" id="sup2"></b></div>
+        <div class="val">cos α = <b class="cos" id="sup3"></b></div>
+        <div class="val">cos(180° − α) = <b class="cos" id="sup4"></b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 WINKEL BESTIMMEN -->
+<section id="winkel">
+  <h2><span class="num">6</span>Winkel zu gegebenem sin-, cos- oder tan-Wert bestimmen</h2>
+  <div class="grid g2">
+    <div class="card">
+      <p>Der Taschenrechner (sin⁻¹, cos⁻¹, tan⁻¹) gibt immer <b>nur einen</b> Winkel aus. Im Bereich 0° ≤ α &lt; 360° gibt es aber (fast) immer <b>zwei Lösungen</b>!</p>
+      <table>
+        <tr><th>gegeben</th><th>1. Lösung (TR)</th><th>2. Lösung</th></tr>
+        <tr><td class="sin">sin α = w</td><td>α₁ = sin⁻¹(w)</td><td>α₂ = 180° − α₁</td></tr>
+        <tr><td class="cos">cos α = w</td><td>α₁ = cos⁻¹(w)</td><td>α₂ = 360° − α₁</td></tr>
+        <tr><td class="tan">tan α = w</td><td>α₁ = tan⁻¹(w)</td><td>α₂ = α₁ + 180°</td></tr>
+      </table>
+      <p class="muted">Negative TR-Ergebnisse noch +360° rechnen, damit sie im Bereich [0°; 360°[ liegen.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">🎯 Winkel-Finder</h3>
+      <div class="row">
+        <div style="flex:0 0 110px"><label>Funktion</label><select id="wf"><option value="sin">sin α =</option><option value="cos">cos α =</option><option value="tan">tan α =</option></select></div>
+        <div><label>Wert</label><input type="text" id="wv" value="-0,5"></div>
+        <div style="flex:0 0 auto"><button id="wbtn">Lösen</button></div>
+      </div>
+      <div class="out" id="wout"></div>
+      <canvas id="wC" height="260" style="margin-top:1rem"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- 7 SÄTZE -->
+<section id="saetze">
+  <h2><span class="num">7</span>Sinussatz & Kosinussatz – für <i>jedes</i> Dreieck</h2>
+  <div class="card" style="margin-bottom:1rem">
+    <canvas id="triInfo" height="220"></canvas>
+    <p class="muted" style="text-align:center;margin-bottom:0">Bezeichnung: Die Seite <b>a</b> liegt dem Winkel <b>α</b> gegenüber, <b>b</b> gegenüber <b>β</b>, <b>c</b> gegenüber <b>γ</b>.</p>
+  </div>
+  <div class="grid g2">
+    <div class="card">
+      <h3 style="margin-top:0" class="sin">Sinussatz</h3>
+      <div class="f big">a / sin α = b / sin β = c / sin γ</div>
+      <p>bzw. <span class="f" style="display:inline-block">a : b = sin α : sin β</span></p>
+      <p><b>Wann?</b> Wenn du ein <b>„Paar“</b> kennst – eine Seite <b>und</b> den gegenüberliegenden Winkel – plus eine weitere Größe.</p>
+      <p><span class="pill">WSW</span><span class="pill">SWW</span><span class="pill">SsW</span></p>
+      <div class="warn">Berechnest du mit dem Sinussatz einen <b>Winkel</b>, prüfe, ob auch der stumpfe Winkel 180° − α₁ möglich ist! Der Winkel gegenüber der <b>größeren</b> Seite ist der größere.</div>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0" class="cos">Kosinussatz</h3>
+      <div class="f">a² = b² + c² − 2·b·c·cos α</div>
+      <div class="f">b² = a² + c² − 2·a·c·cos β</div>
+      <div class="f">c² = a² + b² − 2·a·b·cos γ</div>
+      <p><b>Wann?</b> Wenn du <b>kein Paar</b> hast:</p>
+      <p><span class="pill">SWS</span> → fehlende Seite &nbsp; <span class="pill">SSS</span> → Winkel</p>
+      <p>Nach dem Winkel umgestellt:</p>
+      <div class="f">cos α = (b² + c² − a²) / (2·b·c)</div>
+      <p class="muted">Ist γ = 90°, wird cos γ = 0 → es bleibt der Pythagoras c² = a² + b² 😉</p>
+    </div>
+  </div>
+  <div class="grid g2" style="margin-top:1rem">
+    <div class="card">
+      <h3 style="margin-top:0">📐 Flächeninhalt eines Dreiecks</h3>
+      <div class="f big">A = ½ · a · b · sin γ</div>
+      <p>„Zwei Seiten und der <b>eingeschlossene</b> Winkel“. Genauso: A = ½·b·c·sin α = ½·a·c·sin β</p>
+      <p>Für ein Parallelogramm: A = a · b · sin α</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">🗺️ Entscheidungshilfe</h3>
+      <ol>
+        <li>Skizze machen, gegebene Größen farbig markieren.</li>
+        <li>Gibt es ein <b>Paar</b> (Seite + Gegenwinkel)? → <span class="sin">Sinussatz</span></li>
+        <li>Kein Paar? → <span class="cos">Kosinussatz</span></li>
+        <li>Zwei Winkel bekannt? → dritter Winkel mit <b>180°-Innenwinkelsumme</b></li>
+        <li>Rechtwinkliges Teildreieck? → einfach sin/cos/tan wie in der 9. Klasse</li>
+      </ol>
+    </div>
+  </div>
+  <details><summary>🧠 Musteraufgabe Sinussatz: a = 7 cm, α = 50°, β = 70°. Berechne b.</summary>
+    <div class="out">
+      <div class="step">b / sin β = a / sin α ⇒ b = a · sin β / sin α</div>
+      <div class="step">b = 7 cm · sin 70° / sin 50° ≈ <b>8,59 cm</b></div>
+    </div></details>
+  <details><summary>🧠 Musteraufgabe Kosinussatz: b = 5 cm, c = 8 cm, α = 60°. Berechne a.</summary>
+    <div class="out">
+      <div class="step">a² = 5² + 8² − 2·5·8·cos 60° = 25 + 64 − 40 = 49</div>
+      <div class="step">a = <b>7 cm</b></div>
+    </div></details>
+  <details><summary>🧠 Musteraufgabe Winkel (SSS): a = 4 cm, b = 6 cm, c = 7 cm. Berechne γ.</summary>
+    <div class="out">
+      <div class="step">cos γ = (a² + b² − c²)/(2ab) = (16 + 36 − 49)/48 = 0,0625</div>
+      <div class="step">γ = cos⁻¹(0,0625) ≈ <b>86,42°</b></div>
+    </div></details>
+</section>
+
+<!-- 8 RECHNER -->
+<section id="rechner">
+  <h2><span class="num">8</span>Dreiecksrechner mit Rechenweg 🧮</h2>
+  <div class="card">
+    <p>Gib <b>genau 3 Größen</b> ein (mindestens eine Seite). Leere Felder werden berechnet – inklusive Rechenweg! Perfekt, um deine Hausaufgaben zu kontrollieren.</p>
+    <div class="row">
+      <div><label>a (cm)</label><input type="text" id="ta"></div>
+      <div><label>b (cm)</label><input type="text" id="tb" value="6"></div>
+      <div><label>c (cm)</label><input type="text" id="tc" value="8"></div>
+      <div><label>α (°)</label><input type="text" id="tal" value="40"></div>
+      <div><label>β (°)</label><input type="text" id="tbe"></div>
+      <div><label>γ (°)</label><input type="text" id="tga"></div>
+    </div>
+    <div class="row" style="margin-top:.8rem"><button id="tbtn">Berechnen</button><button class="ghost" id="tclr">Leeren</button><button class="ghost" id="trnd">🎲 Zufallsaufgabe</button></div>
+    <div class="grid g2" style="margin-top:1rem">
+      <div class="out" id="tout" style="margin-top:0"></div>
+      <canvas id="tC" height="320"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- 9 EXTREM -->
+<section id="extrem">
+  <h2><span class="num">9</span>Komplexe Figuren, Abhängigkeit von x & Extremwerte</h2>
+  <div class="grid g2">
+    <div class="card">
+      <h3 style="margin-top:0">🏔️ Typische Schulaufgabe</h3>
+      <p>Gegeben ist das Dreieck ABC mit <b>∢BAC = 30°</b>. Verkürzt man [AB] (8 cm) um <b>x cm</b> und verlängert [AC] (2 cm) um <b>2x cm</b>, entstehen Dreiecke AB<sub>n</sub>C<sub>n</sub>.</p>
+      <ol>
+        <li>Zeige: A(x) = (−0,5x² + 3,5x + 4) cm²</li>
+        <li>Für welchen Wert von x ist der Flächeninhalt maximal?</li>
+      </ol>
+      <label>x = <b id="exV" class="acc"></b></label>
+      <input type="range" id="exS" min="0" max="7.9" step="0.1" value="1">
+      <canvas id="exC" height="260"></canvas>
+    </div>
+    <div class="card">
+      <canvas id="exG" height="260"></canvas>
+      <details open><summary>Lösung</summary>
+        <div class="out">
+          <div class="step">AB<sub>n</sub> = (8 − x) cm, &nbsp;AC<sub>n</sub> = (2 + 2x) cm</div>
+          <div class="step">A(x) = ½ · (8 − x) · (2 + 2x) · sin 30°</div>
+          <div class="step">A(x) = ½ · (16 + 16x − 2x − 2x²) · 0,5</div>
+          <div class="step">A(x) = 0,25 · (−2x² + 14x + 16) = <b>(−0,5x² + 3,5x + 4) cm²</b></div>
+          <div class="step" style="margin-top:.6rem"><b>Quadratische Ergänzung:</b></div>
+          <div class="step">A(x) = −0,5 · [x² − 7x + 3,5² − 3,5²] + 4</div>
+          <div class="step">A(x) = −0,5 · (x − 3,5)² + 6,125 + 4</div>
+          <div class="step">A(x) = −0,5 · (x − 3,5)² + 10,125</div>
+          <div class="step">⇒ <b>A<sub>max</sub> = 10,13 cm² für x = 3,5</b></div>
+          <div class="step muted">Definitionsmenge: 0 &lt; x &lt; 8 (sonst wäre AB<sub>n</sub> ≤ 0)</div>
+        </div>
+      </details>
+    </div>
+  </div>
+  <div class="grid g2" style="margin-top:1rem">
+    <div class="card">
+      <h3 style="margin-top:0">🧭 Abhängigkeit von einem Winkel φ</h3>
+      <p>Hängt die Fläche von einem Winkel ab, z. B. A(φ) = ½ · 6 · 4 · sin φ = 12 · sin φ, dann ist sie <b>maximal für φ = 90°</b>, weil sin φ höchstens 1 wird.</p>
+      <div class="merk">Ein Ausdruck wie <b>k · sin φ</b> ist maximal für φ = 90°. Ein Ausdruck wie <b>k · cos φ</b> ist maximal für φ = 0°.</div>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">🧱 Strategie für komplexe Figuren</h3>
+      <ol>
+        <li>Figur in <b>Teildreiecke</b> zerlegen (Diagonale einzeichnen!).</li>
+        <li>Das Dreieck suchen, in dem schon <b>3 Größen</b> bekannt sind.</li>
+        <li>Berechnete Größen in die Skizze eintragen – sie sind der Schlüssel fürs nächste Dreieck.</li>
+        <li>Nebenwinkel (180°), Scheitelwinkel, Wechselwinkel und Innenwinkelsumme nutzen.</li>
+        <li>Zwischenergebnisse <b>nicht zu früh runden</b> (TR-Speicher nutzen!).</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 10 QUIZ -->
+<section id="quiz">
+  <h2><span class="num">🎮</span>Quiz – unendlich viele Übungsaufgaben</h2>
+  <div class="card">
+    <div class="stats">
+      <div class="stat">Punkte<b id="qPts" class="acc">0</b></div>
+      <div class="stat">Richtig<b id="qOk" class="tan">0</b></div>
+      <div class="stat">Falsch<b id="qNo" class="sin">0</b></div>
+      <div class="stat">Serie 🔥<b id="qStreak">0</b></div>
+      <div style="flex:1;min-width:200px"><label>Thema</label>
+        <select id="qTopic">
+          <option value="all">🎲 Gemischt</option>
+          <option value="neigung">Neigungswinkel & Steigung</option>
+          <option value="schnitt">Schnittwinkel</option>
+          <option value="winkel">Winkel bestimmen / Supplement</option>
+          <option value="sinsatz">Sinussatz</option>
+          <option value="kossatz">Kosinussatz</option>
+          <option value="flaeche">Flächeninhalt</option>
+          <option value="pyth">sin² + cos² = 1</option>
+        </select></div>
+    </div>
+    <div class="quizq" id="qQ"></div>
+    <div class="row">
+      <div><input type="text" id="qA" placeholder="Deine Antwort (auf 2 Dezimalstellen gerundet)"></div>
+      <div style="flex:0 0 auto"><button id="qCheck">Prüfen</button></div>
+      <div style="flex:0 0 auto"><button class="ghost" id="qNext">Nächste ➜</button></div>
+    </div>
+    <div class="out" id="qOut"></div>
+  </div>
+</section>
+
+<!-- 11 SPICK -->
+<section id="spick">
+  <h2><span class="num">📝</span>Spickzettel zum Wiederholen</h2>
+  <div class="card">
+    <div class="grid g3">
+      <div><b>Einheitskreis</b><div class="f">P(cos α | sin α)</div><div class="f">tan α = sin α / cos α</div></div>
+      <div><b>Wertebereiche</b><div class="f">−1 ≤ sin α, cos α ≤ 1</div><div class="f">tan α ∈ ℝ (n.d. bei 90°, 270°)</div></div>
+      <div><b>Pythagoras</b><div class="f">(sin α)² + (cos α)² = 1</div><div class="f">sin(90°−α) = cos α</div></div>
+      <div><b>Steigung</b><div class="f">m = tan α</div><div class="f">m &lt; 0 ⇒ α = tan⁻¹(m) + 180°</div></div>
+      <div><b>Schnittwinkel</b><div class="f">ε = α₂ − α₁</div><div class="f">senkrecht ⇔ m₁·m₂ = −1</div></div>
+      <div><b>Supplement</b><div class="f">sin(180°−α) = sin α</div><div class="f">cos(180°−α) = −cos α</div></div>
+      <div><b>Sinussatz</b><div class="f">a / sin α = b / sin β = c / sin γ</div></div>
+      <div><b>Kosinussatz</b><div class="f">c² = a² + b² − 2ab·cos γ</div></div>
+      <div><b>Fläche</b><div class="f">A = ½ · a · b · sin γ</div></div>
+    </div>
+    <div class="row noprint" style="margin-top:1rem"><button onclick="window.print()">🖨️ Seite drucken</button></div>
+  </div>
+  <div class="merk">Vor der Schulaufgabe: Taschenrechner auf <b>DEG</b> (Grad) stellen! Steht „RAD“ im Display, sind alle Ergebnisse falsch. 😱</div>
+</section>
+</main>
+
+<footer>Viel Erfolg bei der Schulaufgabe, Luis! Du schaffst das! 🍀🚀</footer>
+
+<script>
+// ---------- Helpers ----------
+const $ = id => document.getElementById(id);
+const rad = d => d*Math.PI/180, deg = r => r*180/Math.PI;
+const fmt = (x,d=2) => { if(!isFinite(x)) return "n. d."; let s=(Math.round(x*10**d)/10**d).toFixed(d); if(s==="-0.00"||/^-0\.0*$/.test(s)) s=s.slice(1); return s.replace(".",","); };
+const num = s => { if(s===undefined||s===null) return NaN; s=String(s).trim().replace(",","."); return s===""?NaN:Number(s); };
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const C = {sin:css('--sin'),cos:css('--cos'),tan:css('--tan'),acc:css('--acc'),vio:css('--vio'),text:'#e8ecff',muted:'#9aa6d1',grid:'rgba(255,255,255,.08)',axis:'rgba(255,255,255,.45)'};
+function setup(cv){
+  const dpr=window.devicePixelRatio||1, w=cv.clientWidth, h=+cv.getAttribute('height');
+  cv.style.height=h+'px'; cv.width=w*dpr; cv.height=h*dpr;
+  const ctx=cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,h);
+  ctx.font='14px system-ui'; ctx.lineCap='round'; return {ctx,w,h};
+}
+function line(ctx,x1,y1,x2,y2,col,lw=2,dash){ctx.save();ctx.strokeStyle=col;ctx.lineWidth=lw;if(dash)ctx.setLineDash(dash);ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.restore();}
+function dot(ctx,x,y,col,r=6){ctx.fillStyle=col;ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill();}
+function txt(ctx,t,x,y,col=C.text,align='left',font){ctx.save();ctx.fillStyle=col;ctx.textAlign=align;if(font)ctx.font=font;ctx.fillText(t,x,y);ctx.restore();}
+function arc(ctx,x,y,r,a1,a2,col,fill){ctx.save();ctx.beginPath();ctx.moveTo(x,y);ctx.arc(x,y,r,-a1,-a2,a2>a1);ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill();}ctx.strokeStyle=col;ctx.lineWidth=2;ctx.stroke();ctx.restore();}
+
+// ---------- Checklist ----------
+const goals=["Sinus, Kosinus und Tangens am Einheitskreis darstellen","Wertebereich von sin, cos und tan kennen","Zusammenhänge: sin²+cos²=1, tan = sin/cos","Neigungswinkel ↔ Steigung einer Geraden (m = tan α)","Schnittwinkel zweier Geraden berechnen","Eigenschaften der Sinusfunktion","sin, cos, tan für verschiedene Winkel berechnen","Supplementbeziehungen verstehen","Winkel zu gegebenem sin-, cos-, tan-Wert bestimmen","Sinussatz und Kosinussatz anwenden","Seitenlängen & Winkel in Dreiecken berechnen","Berechnungen in komplexeren Figuren","Aufgaben mit Abhängigkeit von x","Extremwertaufgaben lösen"];
+let done=JSON.parse(localStorage.getItem('luisTrigo')||'[]');
+function renderCheck(){
+  $('checklist').innerHTML=goals.map((g,i)=>`<label class="check"><input type="checkbox" data-i="${i}" ${done.includes(i)?'checked':''}><span>${g}</span></label>`).join('');
+  const p=Math.round(done.length/goals.length*100);
+  $('progbar').style.width=p+'%';
+  $('progtxt').textContent=`${done.length} von ${goals.length} Themen sitzen (${p} %)`+(p===100?' – Du bist bereit! 🏆':'');
+  $('checklist').querySelectorAll('input').forEach(c=>c.onchange=()=>{const i=+c.dataset.i;done=c.checked?[...done,i]:done.filter(x=>x!==i);localStorage.setItem('luisTrigo',JSON.stringify(done));renderCheck();if(c.checked)confetti(30);});
+}
+renderCheck();
+
+// ---------- Unit circle ----------
+let uAng=40;
+function drawUnit(){
+  const cv=$('ucircle'),{ctx,w,h}=setup(cv);
+  const cx=w/2, cy=h/2, R=Math.min(w,h)*0.32;
+  for(let i=-3;i<=3;i++){line(ctx,cx+i*R/2,0,cx+i*R/2,h,C.grid,1);line(ctx,0,cy+i*R/2,w,cy+i*R/2,C.grid,1);}
+  line(ctx,0,cy,w,cy,C.axis,1.5);line(ctx,cx,0,cx,h,C.axis,1.5);
+  txt(ctx,'1',cx+R+4,cy+16,C.muted);txt(ctx,'1',cx+6,cy-R-4,C.muted);txt(ctx,'−1',cx-R-20,cy+16,C.muted);
+  ctx.strokeStyle='rgba(255,255,255,.6)';ctx.lineWidth=2;ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.stroke();
+  const a=rad(uAng), px=cx+R*Math.cos(a), py=cy-R*Math.sin(a);
+  arc(ctx,cx,cy,R*0.22,0,a,C.acc,'rgba(255,201,77,.18)');
+  // tan
+  const c=Math.cos(a), s=Math.sin(a);
+  if(Math.abs(c)>1e-6){
+    const t=s/c, tx=cx+R, ty=cy-R*t;
+    line(ctx,cx+R,0,cx+R,h,'rgba(62,224,143,.25)',1,[4,4]);
+    const tyC=Math.max(-50,Math.min(h+50,ty));
+    line(ctx,cx,cy,c>0?tx:cx+R,c>0?tyC:tyC,'rgba(62,224,143,.5)',1.5,[6,5]);
+    line(ctx,tx,cy,tx,tyC,C.tan,5);
+    if(ty>0&&ty<h) dot(ctx,tx,ty,C.tan,4);
+    txt(ctx,'tan α',tx+8,(cy+Math.max(10,Math.min(h-10,ty)))/2,C.tan);
+  }
+  line(ctx,cx,cy,px,py,'#fff',2.5);
+  line(ctx,px,cy,px,py,C.sin,5); line(ctx,cx,cy,px,cy,C.cos,5);
+  txt(ctx,'sin α',px+(c>=0?8:-48),(cy+py)/2,C.sin);
+  txt(ctx,'cos α',(cx+px)/2-18,cy+(s>=0?20:-10),C.cos);
+  dot(ctx,px,py,C.acc,9);
+  txt(ctx,`P(${fmt(c)} | ${fmt(s)})`,px+(c>=0?12:-12),py+(s>=0?-12:22),C.acc,c>=0?'left':'right','bold 14px system-ui');
+  txt(ctx,'α',cx+R*0.28*Math.cos(a/2)+2,cy-R*0.28*Math.sin(a/2)+5,C.acc);
+  $('uA').textContent=uAng+'°';$('uS').textContent=fmt(s,4);$('uC').textContent=fmt(c,4);
+  $('uT').textContent=(uAng%180===90)?'n. d.':fmt(s/c,4);
+  const q=uAng<90?1:uAng<180?2:uAng<270?3:4;
+  document.querySelectorAll('#quads div').forEach(d=>d.classList.toggle('on',+d.dataset.q===q && uAng%90!==0));
+}
+$('uAngle').oninput=e=>{uAng=+e.target.value;drawUnit();};
+(function(){const cv=$('ucircle');let drag=false;
+  const upd=e=>{const r=cv.getBoundingClientRect();const x=e.clientX-r.left-r.width/2,y=-(e.clientY-r.top-r.height/2);let a=Math.round(deg(Math.atan2(y,x)));if(a<0)a+=360;uAng=a%360;$('uAngle').value=uAng;drawUnit();};
+  cv.addEventListener('pointerdown',e=>{drag=true;cv.setPointerCapture(e.pointerId);upd(e);});
+  cv.addEventListener('pointermove',e=>{if(drag)upd(e);});
+  cv.addEventListener('pointerup',()=>drag=false);
+})();
+
+// ---------- Generic coordinate plotting ----------
+function coord(ctx,w,h,xmin,xmax,ymin,ymax,xstep,ystep,xlab=v=>v,ylab=v=>v){
+  const X=x=>(x-xmin)/(xmax-xmin)*w, Y=y=>h-(y-ymin)/(ymax-ymin)*h;
+  for(let x=Math.ceil(xmin/xstep)*xstep;x<=xmax;x+=xstep){line(ctx,X(x),0,X(x),h,C.grid,1);if(Math.abs(x)>1e-9)txt(ctx,xlab(x),X(x),Y(0)+16>h-4?h-4:Y(0)+16,C.muted,'center','12px system-ui');}
+  for(let y=Math.ceil(ymin/ystep)*ystep;y<=ymax;y+=ystep){line(ctx,0,Y(y),w,Y(y),C.grid,1);if(Math.abs(y)>1e-9)txt(ctx,ylab(y),X(0)-6<20?24:X(0)-6,Y(y)+4,C.muted,'right','12px system-ui');}
+  line(ctx,0,Y(0),w,Y(0),C.axis,1.5);line(ctx,X(0),0,X(0),h,C.axis,1.5);
+  return {X,Y};
+}
+function plot(ctx,X,Y,f,x0,x1,col,lw=3,dash){ctx.save();ctx.strokeStyle=col;ctx.lineWidth=lw;if(dash)ctx.setLineDash(dash);ctx.beginPath();let first=true;for(let i=0;i<=600;i++){const x=x0+(x1-x0)*i/600,y=f(x);if(!isFinite(y)){first=true;continue;}first?ctx.moveTo(X(x),Y(y)):ctx.lineTo(X(x),Y(y));first=false;}ctx.stroke();ctx.restore();}
+
+// ---------- Slope ----------
+function neigung(m){let a=deg(Math.atan(m));if(a<0)a+=180;return a;}
+function drawSlope(){
+  const m=+$('mSlider').value, cv=$('slopeC'), {ctx,w,h}=setup(cv);
+  const {X,Y}=coord(ctx,w,h,-5,5,-4*h/w*1.25,4*h/w*1.25,1,1);
+  const a=neigung(m);
+  // angle arc at x-intercept (line through origin)
+  const r=40; arc(ctx,X(0),Y(0),r,0,rad(a),C.tan,'rgba(62,224,143,.2)');
+  plot(ctx,X,Y,x=>m*x,-5,5,C.acc,3);
+  // slope triangle
+  line(ctx,X(1),Y(0),X(1),Y(m),C.sin,3);line(ctx,X(0),Y(0),X(1),Y(0),C.cos,3);
+  txt(ctx,'1',X(0.5),Y(0)+(m>=0?18:-8),C.cos,'center');txt(ctx,'m = '+fmt(m,1),X(1)+6,Y(m/2),C.sin);
+  txt(ctx,'α = '+fmt(a)+'°',X(0)+r*Math.cos(rad(a/2))+6,Y(0)-r*Math.sin(rad(a/2))-6,C.tan,'left','bold 14px system-ui');
+  txt(ctx,'y = '+fmt(m,1)+'x',12,22,C.acc,'left','bold 15px system-ui');
+  $('mVal').textContent=fmt(m,1);$('mOut').textContent=fmt(m,1);$('aOut').textContent=fmt(a)+'°';
+}
+$('mSlider').oninput=drawSlope;
+
+function drawSchnitt(){
+  const m1=num($('sm1').value), m2=num($('sm2').value);
+  const cv=$('schnittC'), {ctx,w,h}=setup(cv);
+  const ys=5*h/w;
+  const {X,Y}=coord(ctx,w,h,-5,5,-ys,ys,1,1);
+  if(isNaN(m1)||isNaN(m2)){$('schnittOut').innerHTML='Bitte zwei Steigungen eingeben.';return;}
+  plot(ctx,X,Y,x=>m1*x,-5,5,C.cos,3);plot(ctx,X,Y,x=>m2*x,-5,5,C.sin,3);
+  const a1=neigung(m1), a2=neigung(m2);
+  arc(ctx,X(0),Y(0),30,0,rad(a1),C.cos,'rgba(79,179,255,.15)');
+  arc(ctx,X(0),Y(0),46,Math.min(rad(a1),rad(a2)),Math.max(rad(a1),rad(a2)),C.acc,'rgba(255,201,77,.25)');
+  txt(ctx,'g',X(4),Y(m1*4)-8,C.cos,'left','bold 15px system-ui');txt(ctx,'h',X(-4.5),Y(-m2*4.5)-8,C.sin,'left','bold 15px system-ui');
+  let e=Math.abs(a2-a1);const s=e>90?180-e:e;
+  $('schnittOut').innerHTML=`<div class="step">α₁ = tan⁻¹(${fmt(m1,2)}) ${m1<0?'+ 180°':''} = <span class="cos">${fmt(a1)}°</span></div>
+  <div class="step">α₂ = tan⁻¹(${fmt(m2,2)}) ${m2<0?'+ 180°':''} = <span class="sin">${fmt(a2)}°</span></div>
+  <div class="step">ε = |α₂ − α₁| = <b class="acc">${fmt(e)}°</b>${e>90?` → spitzer Schnittwinkel: 180° − ${fmt(e)}° = <b class="acc">${fmt(s)}°</b>`:''}</div>
+  ${Math.abs(m1*m2+1)<1e-9?'<div class="step ok">m₁ · m₂ = −1 ⇒ g ⊥ h 🎉</div>':''}`;
+}
+$('sm1').oninput=drawSchnitt;$('sm2').oninput=drawSchnitt;
+
+// ---------- Sine function ----------
+function drawSin(){
+  const a=+$('sa').value,b=+$('sb').value,cv=$('sinC'),{ctx,w,h}=setup(cv);
+  const ym=Math.max(1.5,Math.abs(a)+0.5);
+  const {X,Y}=coord(ctx,w,h,-380,740,-ym,ym,90,ym>2.5?1:0.5,x=>x+'°',y=>fmt(y,1).replace(',0',''));
+  if($('showUnit').checked)plot(ctx,X,Y,x=>Math.sin(rad(x)),-380,740,'rgba(255,255,255,.3)',2,[6,6]);
+  if($('showCos').checked)plot(ctx,X,Y,x=>Math.cos(rad(x)),-380,740,C.cos,2.5);
+  plot(ctx,X,Y,x=>a*Math.sin(rad(b*x)),-380,740,C.sin,3.5);
+  // one period marker
+  const P=360/b;
+  ctx.fillStyle='rgba(255,92,138,.08)';ctx.fillRect(X(0),0,X(P)-X(0),h);
+  txt(ctx,'1 Periode',X(P/2),18,C.sin,'center','bold 13px system-ui');
+  $('saV').textContent=fmt(a,1);$('sbV').textContent=fmt(b,1);
+  const af=a===1?'':a===-1?'−':fmt(a,1).replace(',0','')+' · ', bf=b===1?'':fmt(b,1).replace(',0','')+'·';
+  $('sinFormula').innerHTML=`<span class="sin">y = ${a===0?'0':af+'sin('+bf+'x)'}</span>`;
+  const hp=a>0?90/b:270/b, tp=a>0?270/b:90/b;
+  $('sinProps').innerHTML=a===0?'<p>a = 0 → der Graph ist die x-Achse.</p>':`<ul>
+   <li><b>Wertemenge:</b> 𝕎 = [${fmt(-Math.abs(a),1)}; ${fmt(Math.abs(a),1)}]</li>
+   <li><b>Amplitude:</b> |a| = ${fmt(Math.abs(a),1)}</li>
+   <li><b>Periode:</b> 360° : ${fmt(b,1)} = ${fmt(P,1)}°</li>
+   <li><b>Nullstellen:</b> x = k · ${fmt(180/b,1)}°</li>
+   <li><b>Hochpunkte:</b> (${fmt(hp,1)}° + k·${fmt(P,1)}° | ${fmt(Math.abs(a),1)})</li>
+   <li><b>Tiefpunkte:</b> (${fmt(tp,1)}° + k·${fmt(P,1)}° | ${fmt(-Math.abs(a),1)})</li>
+   ${a<0?'<li>a &lt; 0 → Graph an der x-Achse gespiegelt</li>':''}</ul>`;
+}
+['sa','sb','showCos','showUnit'].forEach(i=>$(i).oninput=drawSin);
+
+// ---------- Supplement ----------
+function drawSupp(){
+  const al=+$('supS').value,cv=$('suppC'),{ctx,w,h}=setup(cv);
+  const cx=w/2,cy=h*0.62,R=Math.min(w*0.38,h*0.5);
+  line(ctx,0,cy,w,cy,C.axis,1.5);line(ctx,cx,0,cx,h,C.axis,1.5);
+  ctx.strokeStyle='rgba(255,255,255,.5)';ctx.lineWidth=2;ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.stroke();
+  const a=rad(al),b=rad(180-al);
+  const p1=[cx+R*Math.cos(a),cy-R*Math.sin(a)],p2=[cx+R*Math.cos(b),cy-R*Math.sin(b)];
+  arc(ctx,cx,cy,R*0.2,0,a,C.acc,'rgba(255,201,77,.15)');
+  arc(ctx,cx,cy,R*0.3,0,b,C.vio,null);
+  line(ctx,cx,cy,p1[0],p1[1],'#fff',2);line(ctx,cx,cy,p2[0],p2[1],'rgba(255,255,255,.6)',2,[5,5]);
+  line(ctx,p1[0],cy,p1[0],p1[1],C.sin,4);line(ctx,p2[0],cy,p2[0],p2[1],C.sin,4);
+  line(ctx,cx,cy,p1[0],cy,C.cos,4);line(ctx,cx,cy+4,p2[0],cy+4,C.cos,4);
+  line(ctx,p1[0],p1[1],p2[0],p2[1],'rgba(255,201,77,.4)',1,[3,4]);
+  dot(ctx,p1[0],p1[1],C.acc,7);dot(ctx,p2[0],p2[1],C.vio,7);
+  txt(ctx,'α',p1[0]+10,p1[1]-6,C.acc,'left','bold 15px system-ui');txt(ctx,'180° − α',p2[0]-10,p2[1]-6,C.vio,'right','bold 15px system-ui');
+  $('supV').textContent=al+'°';
+  $('sup1').textContent=fmt(Math.sin(a),4);$('sup2').textContent=fmt(Math.sin(b),4);
+  $('sup3').textContent=fmt(Math.cos(a),4);$('sup4').textContent=fmt(Math.cos(b),4);
+}
+$('supS').oninput=drawSupp;
+
+// ---------- Winkel-Finder ----------
+function solveAngles(f,v){
+  let a1,a2,steps=[];
+  if(f==='sin'){ if(Math.abs(v)>1) return {err:'sin α liegt immer zwischen −1 und 1 → keine Lösung!'};
+    let t=deg(Math.asin(v)); steps.push(`TR: sin⁻¹(${fmt(v,4)}) = ${fmt(t)}°`);
+    if(t>=0){a1=t;a2=180-t;steps.push(`α₂ = 180° − ${fmt(t)}° = ${fmt(a2)}°`);}
+    else {a1=180-t;a2=360+t;steps.push(`α₁ = 180° − (${fmt(t)}°) = ${fmt(a1)}°`);steps.push(`α₂ = 360° + (${fmt(t)}°) = ${fmt(a2)}°`);} }
+  else if(f==='cos'){ if(Math.abs(v)>1) return {err:'cos α liegt immer zwischen −1 und 1 → keine Lösung!'};
+    a1=deg(Math.acos(v));a2=360-a1;steps.push(`TR: cos⁻¹(${fmt(v,4)}) = ${fmt(a1)}°`);steps.push(`α₂ = 360° − ${fmt(a1)}° = ${fmt(a2)}°`);}
+  else { let t=deg(Math.atan(v));steps.push(`TR: tan⁻¹(${fmt(v,4)}) = ${fmt(t)}°`);
+    a1=t<0?t+180:t;if(t<0)steps.push(`α₁ = ${fmt(t)}° + 180° = ${fmt(a1)}°`);a2=a1+180;steps.push(`α₂ = ${fmt(a1)}° + 180° = ${fmt(a2)}°`);}
+  let sols=[...new Set([a1,a2].map(x=>Math.round(((x%360)+360)%360*1e6)/1e6))].sort((x,y)=>x-y);
+  return {sols,steps};
+}
+function doWinkel(){
+  const f=$('wf').value,v=num($('wv').value);
+  if(isNaN(v)){$('wout').innerHTML='Bitte eine Zahl eingeben.';return;}
+  const r=solveAngles(f,v);
+  if(r.err){$('wout').innerHTML=`<span class="no">${r.err}</span>`;drawWC(f,v,[]);return;}
+  $('wout').innerHTML=r.steps.map(s=>`<div class="step">${s}</div>`).join('')+`<div class="step" style="margin-top:.5rem">𝕃 = { <b class="acc">${r.sols.map(x=>fmt(x)+'°').join(' ; ')}</b> }</div>`;
+  drawWC(f,v,r.sols);
+}
+function drawWC(f,v,sols){
+  const cv=$('wC'),{ctx,w,h}=setup(cv);const fn={sin:Math.sin,cos:Math.cos,tan:Math.tan}[f];
+  const ym=f==='tan'?Math.max(3,Math.abs(v)+1):1.5;
+  const {X,Y}=coord(ctx,w,h,-20,380,-ym,ym,90,f==='tan'?1:0.5,x=>x+'°',y=>fmt(y,1));
+  plot(ctx,X,Y,x=>{const y=fn(rad(x));return f==='tan'&&Math.abs(Math.cos(rad(x)))<0.02?NaN:y;},0,360,C[f],3);
+  line(ctx,0,Y(v),w,Y(v),C.acc,2,[6,5]);txt(ctx,'y = '+fmt(v,2),w-6,Y(v)-6,C.acc,'right');
+  sols.forEach(s=>{line(ctx,X(s),Y(0),X(s),Y(v),C.acc,1.5,[3,3]);dot(ctx,X(s),Y(v),C.acc,6);});
+}
+$('wbtn').onclick=doWinkel;$('wv').onkeydown=e=>{if(e.key==='Enter')doWinkel();};$('wf').onchange=doWinkel;
+
+// ---------- Triangle drawing ----------
+function drawTri(cv,a,b,c,al,be,ga,labels=true){
+  const {ctx,w,h}=setup(cv);
+  const A=[0,0],B=[c,0],Cc=[b*Math.cos(rad(al)),b*Math.sin(rad(al))];
+  const xs=[A[0],B[0],Cc[0]],ys=[A[1],B[1],Cc[1]];
+  const minx=Math.min(...xs),maxx=Math.max(...xs),maxy=Math.max(...ys);
+  const pad=40,s=Math.min((w-2*pad)/(maxx-minx),(h-2*pad)/maxy);
+  const ox=(w-(maxx-minx)*s)/2-minx*s, oy=h-(h-maxy*s)/2;
+  const P=p=>[ox+p[0]*s,oy-p[1]*s];
+  const [pa,pb,pc]=[P(A),P(B),P(Cc)];
+  ctx.fillStyle='rgba(167,139,250,.12)';ctx.beginPath();ctx.moveTo(...pa);ctx.lineTo(...pb);ctx.lineTo(...pc);ctx.closePath();ctx.fill();
+  line(ctx,...pb,...pc,C.sin,3);line(ctx,...pa,...pc,C.cos,3);line(ctx,...pa,...pb,C.tan,3);
+  const ang=(p,q,r)=>Math.atan2(-(q[1]-p[1]),q[0]-p[0]);
+  const marc=(p,q,r,col)=>{let a1=ang(p,q),a2=ang(p,r);ctx.save();ctx.strokeStyle=col;ctx.lineWidth=2;ctx.beginPath();let d=a2-a1;while(d<=-Math.PI)d+=2*Math.PI;while(d>Math.PI)d-=2*Math.PI;ctx.arc(p[0],p[1],22,-a1,-(a1+d),d>0);ctx.stroke();ctx.restore();};
+  marc(pa,pb,pc,C.acc);marc(pb,pc,pa,C.acc);marc(pc,pa,pb,C.acc);
+  [[pa,'A',-14,14],[pb,'B',8,14],[pc,'C',0,-10]].forEach(([p,l,dx,dy])=>txt(ctx,l,p[0]+dx,p[1]+dy,'#fff','center','bold 15px system-ui'));
+  const mid=(p,q)=>[(p[0]+q[0])/2,(p[1]+q[1])/2];
+  const lab=(p,q,t,col,o)=>{const m=mid(p,q),cen=[(pa[0]+pb[0]+pc[0])/3,(pa[1]+pb[1]+pc[1])/3];let dx=m[0]-cen[0],dy=m[1]-cen[1],l=Math.hypot(dx,dy)||1;txt(ctx,t,m[0]+dx/l*16,m[1]+dy/l*16+5,col,'center','bold 14px system-ui');};
+  const L=(n,v,u)=>labels&&isFinite(v)?`${n} = ${fmt(v)}${u}`:n;
+  lab(pb,pc,L('a',a,' cm'),C.sin);lab(pa,pc,L('b',b,' cm'),C.cos);lab(pa,pb,L('c',c,' cm'),C.tan);
+  const inner=(p,q,r,t)=>{const m=[(q[0]+r[0])/2,(q[1]+r[1])/2];let dx=m[0]-p[0],dy=m[1]-p[1],l=Math.hypot(dx,dy);txt(ctx,t,p[0]+dx/l*38,p[1]+dy/l*38+5,C.acc,'center','13px system-ui');};
+  inner(pa,pb,pc,labels?'α='+fmt(al,1)+'°':'α');inner(pb,pa,pc,labels?'β='+fmt(be,1)+'°':'β');inner(pc,pa,pb,labels?'γ='+fmt(ga,1)+'°':'γ');
+}
+
+// ---------- Triangle solver ----------
+const SN=['a','b','c'],AN=['α','β','γ'];
+function solveTri(S,A,branch=0,steps=[],amb={v:false}){
+  S=[...S];A=[...A];
+  for(let it=0;it<10;it++){
+    const ks=[0,1,2].filter(i=>!isNaN(S[i])),ka=[0,1,2].filter(i=>!isNaN(A[i]));
+    if(ks.length===3&&ka.length===3)break;
+    if(ka.length===2){const i=[0,1,2].find(i=>isNaN(A[i]));const [j,k]=ka;A[i]=180-A[j]-A[k];if(A[i]<=0)return{err:'Die Winkelsumme ist zu groß (≥ 180°).'};steps.push(`${AN[i]} = 180° − ${fmt(A[j])}° − ${fmt(A[k])}° = <b>${fmt(A[i])}°</b> &nbsp;<span class="muted">(Innenwinkelsumme)</span>`);continue;}
+    if(ks.length===3&&ka.length<3){const [i,j,k]=[0,1,2].find(i=>isNaN(A[i]))!==undefined?(()=>{const i=[0,1,2].find(i=>isNaN(A[i]));return [i,(i+1)%3,(i+2)%3];})():[0,1,2];
+      const cv=(S[j]**2+S[k]**2-S[i]**2)/(2*S[j]*S[k]);if(Math.abs(cv)>=1)return{err:'Aus diesen drei Seiten lässt sich kein Dreieck bauen (Dreiecksungleichung verletzt).'};
+      A[i]=deg(Math.acos(cv));steps.push(`<span class="cos">Kosinussatz:</span> cos ${AN[i]} = (${SN[j]}² + ${SN[k]}² − ${SN[i]}²) / (2·${SN[j]}·${SN[k]}) = (${fmt(S[j])}² + ${fmt(S[k])}² − ${fmt(S[i])}²) / (2·${fmt(S[j])}·${fmt(S[k])}) ≈ ${fmt(cv,4)} ⇒ ${AN[i]} ≈ <b>${fmt(A[i])}°</b>`);continue;}
+    let done=false;
+    // pair
+    const pair=[0,1,2].find(i=>!isNaN(S[i])&&!isNaN(A[i]));
+    if(pair!==undefined){const ratio=S[pair]/Math.sin(rad(A[pair]));
+      for(const j of [0,1,2]){if(j===pair)continue;
+        if(!isNaN(A[j])&&isNaN(S[j])){S[j]=ratio*Math.sin(rad(A[j]));steps.push(`<span class="sin">Sinussatz:</span> ${SN[j]} = ${SN[pair]} · sin ${AN[j]} / sin ${AN[pair]} = ${fmt(S[pair])} · sin ${fmt(A[j])}° / sin ${fmt(A[pair])}° ≈ <b>${fmt(S[j])} cm</b>`);done=true;break;}
+        if(!isNaN(S[j])&&isNaN(A[j])){const sv=S[j]/ratio;if(sv>1+1e-12)return{err:`sin ${AN[j]} = ${fmt(sv,4)} > 1 ⇒ Es gibt <b>kein</b> solches Dreieck!`};
+          let t=deg(Math.asin(Math.min(1,sv)));const alt=180-t;
+          steps.push(`<span class="sin">Sinussatz:</span> sin ${AN[j]} = ${SN[j]} · sin ${AN[pair]} / ${SN[pair]} = ${fmt(S[j])} · sin ${fmt(A[pair])}° / ${fmt(S[pair])} ≈ ${fmt(sv,4)}`);
+          const altOk=Math.abs(alt-t)>1e-6&&alt+A[pair]<180-1e-9;
+          if(altOk){amb.v=true;if(branch===1){t=alt;steps.push(`2. Lösung: ${AN[j]} = 180° − ${fmt(180-alt)}° = <b>${fmt(t)}°</b>`);}else steps.push(`${AN[j]} ≈ <b>${fmt(t)}°</b> &nbsp;<span class="muted">(auch ${fmt(alt)}° wäre möglich!)</span>`);}
+          else steps.push(`${AN[j]} ≈ <b>${fmt(t)}°</b>${Math.abs(alt-t)>1e-6?` <span class="muted">(${fmt(alt)}° entfällt, da ${fmt(alt)}° + ${fmt(A[pair])}° ≥ 180°)</span>`:''}`);
+          A[j]=t;done=true;break;}}
+      if(done)continue;}
+    // SWS
+    for(const i of [0,1,2]){const j=(i+1)%3,k=(i+2)%3;if(isNaN(S[i])&&!isNaN(S[j])&&!isNaN(S[k])&&!isNaN(A[i])){S[i]=Math.sqrt(S[j]**2+S[k]**2-2*S[j]*S[k]*Math.cos(rad(A[i])));steps.push(`<span class="cos">Kosinussatz:</span> ${SN[i]}² = ${SN[j]}² + ${SN[k]}² − 2·${SN[j]}·${SN[k]}·cos ${AN[i]} = ${fmt(S[j])}² + ${fmt(S[k])}² − 2·${fmt(S[j])}·${fmt(S[k])}·cos ${fmt(A[i])}° ⇒ ${SN[i]} ≈ <b>${fmt(S[i])} cm</b>`);done=true;break;}}
+    if(done)continue;
+    break;
+  }
+  if([...S,...A].some(isNaN))return{err:'Mit diesen Angaben lässt sich das Dreieck nicht eindeutig berechnen. Du brauchst mindestens eine Seite!'};
+  return{S,A,steps,amb:amb.v};
+}
+function runTri(){
+  const S=['ta','tb','tc'].map(i=>num($(i).value)),A=['tal','tbe','tga'].map(i=>num($(i).value));
+  const cnt=[...S,...A].filter(x=>!isNaN(x)).length;
+  if(cnt!==3){$('tout').innerHTML=`<span class="no">Bitte genau 3 Größen eingeben (du hast ${cnt}).</span>`;return;}
+  if(S.some(x=>x<=0)||A.some(x=>x<=0||x>=180)){$('tout').innerHTML='<span class="no">Seiten müssen > 0 und Winkel zwischen 0° und 180° sein.</span>';return;}
+  const amb={v:false};const r=solveTri(S,A,0,[],amb);
+  if(r.err){$('tout').innerHTML=`<span class="no">${r.err}</span>`;setup($('tC'));return;}
+  const area=0.5*r.S[0]*r.S[1]*Math.sin(rad(r.A[2]));
+  let html='<b>Rechenweg:</b>'+r.steps.map(s=>`<div class="step">→ ${s}</div>`).join('')+`<div class="step">→ Fläche: A = ½·a·b·sin γ ≈ <b>${fmt(area)} cm²</b></div>`;
+  if(amb.v){const r2=solveTri(S,A,1,[]);if(!r2.err){html+=`<div class="warn" style="margin-top:1rem">Hier gibt es <b>zwei</b> Dreiecke (SsW-Fall)! Die zweite Lösung:<br>`+r2.steps.map(s=>`<div class="step">→ ${s}</div>`).join('')+`</div>`;}}
+  $('tout').innerHTML=html;drawTri($('tC'),...r.S,...r.A);
+}
+$('tbtn').onclick=runTri;
+$('tclr').onclick=()=>{['ta','tb','tc','tal','tbe','tga'].forEach(i=>$(i).value='');$('tout').innerHTML='';setup($('tC'));};
+$('trnd').onclick=()=>{
+  const ids=['ta','tb','tc','tal','tbe','tga'];ids.forEach(i=>$(i).value='');
+  const cases=[[0,1,5],[0,1,2],[1,2,3],[0,3,4],[2,3,4],[0,2,4]];const cs=cases[Math.floor(Math.random()*cases.length)];
+  let al=rnd(30,80,0),be=rnd(30,180-al-25,0),ga=180-al-be,k=rnd(4,9,1)/Math.sin(rad(al));const vals=[k*Math.sin(rad(al)),k*Math.sin(rad(be)),k*Math.sin(rad(ga)),al,be,ga];
+  cs.forEach(i=>$(ids[i]).value=fmt(vals[i],i<3?1:0).replace(',0','').replace(/,(\d)0$/,',$1'));runTri();};
+function rnd(a,b,d=0){return Math.round((a+Math.random()*(b-a))*10**d)/10**d;}
+
+// ---------- Info triangle ----------
+function drawInfo(){drawTri($('triInfo'),5,6,7.5,deg(Math.acos((36+56.25-25)/(2*6*7.5))),deg(Math.acos((25+56.25-36)/(2*5*7.5))),0,false);}
+
+// ---------- Extremwert ----------
+function drawEx(){
+  const x=+$('exS').value;$('exV').textContent=fmt(x,1);
+  const ab=8-x,ac=2+2*x,A=0.5*ab*ac*0.5;
+  // triangle
+  const cv=$('exC'),{ctx,w,h}=setup(cv);
+  const s=Math.min((w-40)/9,(h-40)/ (Math.max(ac*0.5,9*0.5)+0.5));
+  const ox=20,oy=h-24,P=(px,py)=>[ox+px*s,oy-py*s];
+  const a30=rad(30),Bp=P(ab,0),Cp=P(ac*Math.cos(a30),ac*Math.sin(a30)),Ap=P(0,0);
+  // original
+  line(ctx,...Ap,...P(8,0),'rgba(255,255,255,.25)',2,[5,5]);
+  ctx.fillStyle='rgba(255,92,138,.18)';ctx.beginPath();ctx.moveTo(...Ap);ctx.lineTo(...Bp);ctx.lineTo(...Cp);ctx.closePath();ctx.fill();
+  line(ctx,...Ap,...Bp,C.tan,3);line(ctx,...Ap,...Cp,C.cos,3);line(ctx,...Bp,...Cp,C.sin,3);
+  arc(ctx,...Ap,26,0,a30,C.acc,'rgba(255,201,77,.2)');txt(ctx,'30°',Ap[0]+30,Ap[1]-6,C.acc);
+  txt(ctx,'A',Ap[0]-4,Ap[1]+18,'#fff','center','bold 14px system-ui');txt(ctx,'Bₙ',Bp[0],Bp[1]+18,'#fff','center','bold 14px system-ui');txt(ctx,'Cₙ',Cp[0]+4,Cp[1]-8,'#fff','center','bold 14px system-ui');
+  txt(ctx,`A(${fmt(x,1)}) = ${fmt(A)} cm²`,w-10,22,C.acc,'right','bold 15px system-ui');
+  // graph
+  const g=$('exG'),G=setup(g);
+  const {X,Y}=coord(G.ctx,G.w,G.h,-0.8,8.5,-1.5,12,1,2);
+  plot(G.ctx,X,Y,t=>-0.5*t*t+3.5*t+4,0,8,C.vio,3);
+  line(G.ctx,X(3.5),Y(0),X(3.5),Y(10.125),C.acc,1.5,[4,4]);dot(G.ctx,X(3.5),Y(10.125),C.acc,6);txt(G.ctx,'Max (3,5 | 10,13)',X(3.5)+8,Y(10.125)-8,C.acc);
+  dot(G.ctx,X(x),Y(A),C.sin,7);txt(G.ctx,'A(x)',G.w-10,20,C.vio,'right','bold 14px system-ui');
+}
+$('exS').oninput=drawEx;
+
+// ---------- Quiz ----------
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const gens={
+  neigung(){ if(Math.random()<0.5){const m=pick([-3,-2.5,-2,-1.5,-1.2,-0.8,-0.5,0.3,0.5,0.75,1.2,1.5,2,2.5,4]);const a=neigung(m);
+      return{q:`Berechne den Neigungswinkel α der Geraden g: y = ${fmt(m,2).replace(/,?0+$/,'')}x + 1.`,ans:a,unit:'°',sol:`α = tan⁻¹(${fmt(m,2)})${m<0?' + 180°':''} ≈ ${fmt(a)}°`};}
+    const a=rnd(10,170,0);if(a===90)return gens.neigung();const m=Math.tan(rad(a));return{q:`Eine Gerade hat den Neigungswinkel α = ${a}°. Berechne ihre Steigung m.`,ans:m,unit:'',sol:`m = tan ${a}° ≈ ${fmt(m)}`};},
+  schnitt(){const m1=pick([0.5,1,2,-0.5,1.5,3]),m2=pick([-1,-2,-3,0.25,-0.75,4]);const a1=neigung(m1),a2=neigung(m2);let e=Math.abs(a2-a1);if(e>90)e=180-e;
+    return{q:`Berechne den spitzen Schnittwinkel der Geraden g: y = ${fmt(m1,2).replace(/,?0+$/,'')}x und h: y = ${fmt(m2,2).replace(/,?0+$/,'')}x + 2.`,ans:e,unit:'°',sol:`α₁ ≈ ${fmt(a1)}°, α₂ ≈ ${fmt(a2)}°, |α₂ − α₁| ≈ ${fmt(Math.abs(a2-a1))}°${Math.abs(a2-a1)>90?` → 180° − ${fmt(Math.abs(a2-a1))}°`:''} = ${fmt(e)}°`};},
+  winkel(){const t=Math.random();
+    if(t<0.33){const v=pick([0.3,0.45,0.62,0.8,0.25]);const a=180-deg(Math.asin(v));return{q:`sin α = ${fmt(v,2)} und α ist <b>stumpf</b> (90° &lt; α &lt; 180°). Berechne α.`,ans:a,unit:'°',sol:`sin⁻¹(${fmt(v,2)}) ≈ ${fmt(deg(Math.asin(v)))}° → stumpfer Winkel: α = 180° − ${fmt(deg(Math.asin(v)))}° ≈ ${fmt(a)}°`};}
+    if(t<0.66){const v=pick([-0.4,-0.7,0.35,0.55,-0.2]);const a1=deg(Math.acos(v)),a2=360-a1;return{q:`cos α = ${fmt(v,2)} mit 180° &lt; α &lt; 360°. Berechne α.`,ans:a2,unit:'°',sol:`cos⁻¹(${fmt(v,2)}) ≈ ${fmt(a1)}° → zweite Lösung: α = 360° − ${fmt(a1)}° ≈ ${fmt(a2)}°`};}
+    const al=rnd(10,80,0);const s=Math.sin(rad(al));return{q:`Es gilt sin ${al}° ≈ ${fmt(s,4)}. Berechne mithilfe der Supplementbeziehung: cos(180° − ${90-al}°) = ?  <span class="muted">(4 Dezimalstellen)</span>`,ans:-Math.cos(rad(90-al)),unit:'',dec:4,sol:`cos(180° − ${90-al}°) = −cos ${90-al}° = −sin ${al}° ≈ ${fmt(-s,4)}`};},
+  sinsatz(){const al=rnd(30,70,0),be=rnd(30,170-al-20,0),a=rnd(4,10,1);if(Math.random()<0.5){const b=a*Math.sin(rad(be))/Math.sin(rad(al));
+      return{q:`Im Dreieck ABC gilt: a = ${fmt(a,1)} cm, α = ${al}°, β = ${be}°. Berechne b.`,ans:b,unit:'cm',sol:`b = a · sin β / sin α = ${fmt(a,1)} · sin ${be}° / sin ${al}° ≈ ${fmt(b)} cm`};}
+    const ga=180-al-be,c=a*Math.sin(rad(ga))/Math.sin(rad(al));return{q:`Im Dreieck ABC gilt: a = ${fmt(a,1)} cm, α = ${al}°, β = ${be}°. Berechne c.`,ans:c,unit:'cm',sol:`γ = 180° − ${al}° − ${be}° = ${ga}°; c = a · sin γ / sin α = ${fmt(a,1)} · sin ${ga}° / sin ${al}° ≈ ${fmt(c)} cm`};},
+  kossatz(){const b=rnd(3,9,1),c=rnd(3,9,1);if(Math.random()<0.5){const al=rnd(25,140,0);const a=Math.sqrt(b*b+c*c-2*b*c*Math.cos(rad(al)));
+      return{q:`Im Dreieck ABC gilt: b = ${fmt(b,1)} cm, c = ${fmt(c,1)} cm, α = ${al}°. Berechne a.`,ans:a,unit:'cm',sol:`a² = b² + c² − 2bc·cos α = ${fmt(b,1)}² + ${fmt(c,1)}² − 2·${fmt(b,1)}·${fmt(c,1)}·cos ${al}° ≈ ${fmt(a*a)} ⇒ a ≈ ${fmt(a)} cm`};}
+    let a=rnd(Math.abs(b-c)+1,b+c-1,1);const cv=(b*b+c*c-a*a)/(2*b*c);const al=deg(Math.acos(cv));
+    return{q:`Im Dreieck ABC gilt: a = ${fmt(a,1)} cm, b = ${fmt(b,1)} cm, c = ${fmt(c,1)} cm. Berechne α.`,ans:al,unit:'°',sol:`cos α = (b² + c² − a²)/(2bc) ≈ ${fmt(cv,4)} ⇒ α ≈ ${fmt(al)}°`};},
+  flaeche(){const a=rnd(3,10,1),b=rnd(3,10,1),g=rnd(20,150,0);const A=0.5*a*b*Math.sin(rad(g));
+    return{q:`Berechne den Flächeninhalt des Dreiecks ABC mit a = ${fmt(a,1)} cm, b = ${fmt(b,1)} cm und γ = ${g}°.`,ans:A,unit:'cm²',sol:`A = ½ · ${fmt(a,1)} · ${fmt(b,1)} · sin ${g}° ≈ ${fmt(A)} cm²`};},
+  pyth(){const s=pick([0.6,0.28,0.8,0.96,0.5,0.4]);const q=pick([1,2]);const c=Math.sqrt(1-s*s)*(q===1?1:-1);
+    return{q:`Es gilt sin α = ${fmt(s,2)} und α liegt im ${q===1?'I.':'II.'} Quadranten. Berechne cos α. <span class="muted">(4 Dezimalstellen)</span>`,ans:c,unit:'',dec:4,sol:`(cos α)² = 1 − ${fmt(s,2)}² = ${fmt(1-s*s,4)} ⇒ cos α = ${q===1?'+':'−'}√${fmt(1-s*s,4)} ≈ ${fmt(c,4)} ${q===2?'(im II. Quadranten ist cos negativ!)':''}`};}
+};
+let cur=null,stat={pts:0,ok:0,no:0,streak:0,answered:false};
+function nextQ(){const t=$('qTopic').value;const k=t==='all'?pick(Object.keys(gens)):t;cur=gens[k]();stat.answered=false;
+  $('qQ').innerHTML=cur.q;$('qA').value='';$('qOut').innerHTML='<span class="muted">Runde auf '+(cur.dec||2)+' Dezimalstellen. Komma oder Punkt ist egal.</span>';$('qA').focus({preventScroll:true});}
+function checkQ(){if(!cur)return;const v=num($('qA').value);if(isNaN(v)){$('qOut').innerHTML='<span class="no">Bitte eine Zahl eingeben.</span>';return;}
+  const tol=cur.dec===4?0.0006:Math.max(0.011,Math.abs(cur.ans)*0.002);const ok=Math.abs(v-cur.ans)<=tol;
+  if(!stat.answered){stat.answered=true;if(ok){stat.ok++;stat.streak++;stat.pts+=10+5*(stat.streak-1);confetti(stat.streak>=3?120:60);}else{stat.no++;stat.streak=0;}}
+  $('qOut').innerHTML=(ok?`<div class="ok">✅ Richtig! ${pick(['Stark, Luis!','Läuft bei dir! 🔥','Genau so!','Mathe-Profi! 🧠','Weiter so! 💪'])}</div>`:`<div class="no">❌ Leider nicht. Richtig wäre ≈ ${fmt(cur.ans,cur.dec||2)} ${cur.unit}</div>`)+`<div class="step" style="margin-top:.4rem"><b>Lösungsweg:</b> ${cur.sol}</div>`;
+  $('qPts').textContent=stat.pts;$('qOk').textContent=stat.ok;$('qNo').textContent=stat.no;$('qStreak').textContent=stat.streak;}
+$('qCheck').onclick=checkQ;$('qNext').onclick=nextQ;$('qTopic').onchange=nextQ;
+$('qA').onkeydown=e=>{if(e.key==='Enter'){stat.answered?nextQ():checkQ();}};
+
+// ---------- Confetti ----------
+const cf=$('confetti'),cctx=cf.getContext('2d');let parts=[],anim=false;
+function confetti(n=60){cf.width=innerWidth;cf.height=innerHeight;const cols=[C.sin,C.cos,C.tan,C.acc,C.vio];
+  for(let i=0;i<n;i++)parts.push({x:innerWidth/2+(Math.random()-.5)*200,y:innerHeight*0.6,vx:(Math.random()-.5)*14,vy:-Math.random()*16-6,r:Math.random()*6+3,c:pick(cols),rot:Math.random()*6,life:120});
+  if(!anim){anim=true;requestAnimationFrame(stepC);}}
+function stepC(){cctx.clearRect(0,0,cf.width,cf.height);parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=0.45;p.rot+=0.2;p.life--;cctx.save();cctx.translate(p.x,p.y);cctx.rotate(p.rot);cctx.fillStyle=p.c;cctx.fillRect(-p.r,-p.r/2,p.r*2,p.r);cctx.restore();});
+  parts=parts.filter(p=>p.life>0&&p.y<cf.height+20);if(parts.length)requestAnimationFrame(stepC);else{anim=false;cctx.clearRect(0,0,cf.width,cf.height);}}
+
+// ---------- Nav highlight ----------
+const links=[...document.querySelectorAll('nav a')];
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id));}}),{rootMargin:'-40% 0px -55% 0px'});
+document.querySelectorAll('section[id],header[id]').forEach(s=>obs.observe(s));
+
+// ---------- Init ----------
+function drawAll(){drawUnit();drawSlope();drawSchnitt();drawSin();drawSupp();doWinkel();drawInfo();drawEx();if($('tout').innerHTML)runTri();}
+window.addEventListener('resize',()=>{clearTimeout(window._rt);window._rt=setTimeout(drawAll,150);});
+drawAll();runTri();nextQ();
+</script>
+</body>
+</html>
